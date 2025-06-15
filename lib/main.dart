@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
-  runApp(const MainApp());
+Future<void> main()  async {
+
+  //!! It can't find the different env find it out later
+  // const env = String.fromEnvironment('env', defaultValue: 'dev');
+
+  // await dotenv.load(fileName: '.env');
+  runApp( MainApp());
 }
 
 class MainApp extends StatelessWidget {
