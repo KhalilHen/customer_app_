@@ -7,11 +7,11 @@ Future<void> main()  async {
   // const env = String.fromEnvironment('env', defaultValue: 'dev');
 
   // await dotenv.load(fileName: '.env');
-  runApp( MainApp());
+  runApp( const MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+    const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
       home: Scaffold(
         body: Center(
           child: Text('Hello World!'),
-        ),
+        ),    
       ),
     );
   }

@@ -1,1 +1,51 @@
 include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  plugins:
+    - dart_code_metrics
+
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.mocks.dart"
+    - "**/generated_plugin_registrant.dart"
+    - "lib/generated/**"
+    - "build/**"
+    - "android/**"
+    - "ios/**"
+    - "web/**"
+    - "windows/**"
+    - "macos/**"
+    - "linux/**"
+
+linter:
+  rules:
+    - use_super_parameters
+    # Optional: Helps avoid `print()` in prod
+    - avoid_print
+    # Optional: More readable padding/margin with trailing commas
+    - prefer_trailing_comma
+    # Optional: Good for widget performance
+    - prefer_const_constructors
+    - prefer_const_literals_to_create_immutables
+
+dart_code_metrics:
+  metrics:
+    cyclomatic-complexity: 20
+    number-of-parameters: 4
+    source-lines-number: 100
+    maximum-nesting-level: 5
+
+  rules:
+    - prefer-extracting-callbacks
+    - prefer-match-file-name
+    - prefer-conditional-expressions
+    - avoid-nested-conditional-expressions
+    - no-equal-then-else
+    - member-ordering
+    - avoid-unnecessary-setstate
+    - prefer-const-border-radius
