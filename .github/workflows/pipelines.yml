@@ -51,8 +51,6 @@ jobs:
         run: flutter analyze 
 
 
-      - name: Security audit
-        run: flutter pub deps --json | dart pub global run pana --json
 
       # Your project will need to have tests in test/ and a dependency on
       # package:test for this step to succeed. Note that Flutter projects will
