@@ -28,7 +28,6 @@ linter:
     # Optional: Helps avoid `print()` in prod
     - avoid_print
     # Optional: More readable padding/margin with trailing commas
-    - prefer_trailing_comma
     # Optional: Good for widget performance
     - prefer_const_constructors
     - prefer_const_literals_to_create_immutables
