@@ -22,7 +22,6 @@ Future<void> main() async {
       dotenv.env['SUPABASE_ANON_KEY'] ??
       (throw Exception('Something went wrong with the database!'));
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
-  print(showDebugBanner);
   runApp(MainApp(showDebugBanner: showDebugBanner));
 }
 
