@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hf_customer_app/pages/homepage.dart';
+import 'package:hf_customer_app/pages/login.dart';
+import 'package:hf_customer_app/routes/routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -30,9 +32,11 @@ Future<void> main() async {
   //     (throw Exception('Something went wrong with the database!'));
   // await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
   // runApp(MainApp(showDebugBanner: showDebugBanner));
+
   runApp(const MainApp());
 
 }
+  final supabase = Supabase.instance.client;
 
 class MainApp extends StatelessWidget {
   // const MainApp({super.key, required this.showDebugBanner});
@@ -42,11 +46,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       // debugShowCheckedModeBanner: showDebugBanner,
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
 
-      home: Homepage(),
+  initialRoute:  Routes.homePage, //
+
+
+      // home: const LoginPage(),
+
+      routes: Routes.routes,
+      // onUnknownRoute: , //Put here a default page //TODO
     );
   }
 }

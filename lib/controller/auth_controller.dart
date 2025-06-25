@@ -1,3 +1,4 @@
+import 'package:hf_customer_app/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 //TODO add better error handeling
@@ -46,5 +47,9 @@ class AuthController {
     } else {
       return user;
     }
+  }
+  bool isLoggedIn() {
+    return supabase.auth.currentUser != null;
+
   }
 }
