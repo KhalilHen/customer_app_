@@ -3,14 +3,14 @@ import 'package:hf_customer_app/controller/auth_controller.dart';
 import 'package:hf_customer_app/pages/homepage.dart';
 import 'package:hf_customer_app/routes/routes.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final authController = AuthController();
@@ -19,6 +19,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      persistentFooterButtons: const [
+        Text.rich(
+          textAlign: TextAlign.center,
+          TextSpan(
+            children: [
+              TextSpan(text: "By continuing you agree our "),
+              TextSpan(text: "Terms and service"),
+            ],
+          ),
+        ),
+      ],
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Center(
@@ -29,10 +40,11 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
-                    'Welcome Back',
+                    'Registreer ',
                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 32),
+
                   TextFormField(
                     controller: emailController,
                     decoration: const InputDecoration(
@@ -64,6 +76,9 @@ class _LoginPageState extends State<LoginPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Vul iets in";
+                      } 
+                      if (value.length <= 6 ) {
+                          return "Wachtwoord is te zwak minimaal 6 characters";
                       }
 
                       return null;
@@ -73,9 +88,9 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       TextButton(
                         onPressed: () =>
-                            Navigator.pushNamed(context, Routes.signUp),
+                            Navigator.pushNamed(context, Routes.login),
 
-                        child: const Text("Sign up"),
+                        child: const Text("Login"),
                       ),
                       const SizedBox(width: 40),
                       TextButton(
@@ -90,16 +105,13 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     height: 48,
                     child: ElevatedButton(
-                      //? Mabye add a way too not be able to  submit multiple times at once
                       onPressed: () async {
-                        if (formKey.currentState!.validate()) {
-                          // formKey.currentState!.save();
+                        if (formKey.currentState?.validate() ?? false) {
                           try {
-                            final succes = await authController.login(
+                            final succes = await authController.signUp(
                               emailController.text,
                               passwordController.text,
                             );
-
                             if (succes) {
                               if (!context.mounted) return;
 
@@ -109,6 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               );
                             }
+
                           } catch (e) {
                             formKey.currentState!.reset();
                             if (!context.mounted) return;
@@ -124,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                       child: const Text(
-                        'Login',
+                        'Register',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
