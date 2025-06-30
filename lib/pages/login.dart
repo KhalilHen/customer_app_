@@ -79,7 +79,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(width: 40),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => Navigator.pushNamed(context, Routes.forgotPasswordPage),
+                      
                         child: const Text("Forgot password?"),
                       ),
                     ],
@@ -93,7 +94,6 @@ class _LoginPageState extends State<LoginPage> {
                       //? Mabye add a way too not be able to  submit multiple times at once
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          // formKey.currentState!.save();
                           try {
                             final succes = await authController.login(
                               emailController.text,
@@ -103,14 +103,15 @@ class _LoginPageState extends State<LoginPage> {
                             if (succes) {
                               if (!context.mounted) return;
 
-                              Navigator.of(context).pushReplacement(
+                              Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => const Homepage(),
                                 ),
                               );
                             }
                           } catch (e) {
-                            formKey.currentState!.reset();
+                            // formKey.currentState!.reset();
+                            passwordController.clear();
                             if (!context.mounted) return;
 
                             ScaffoldMessenger.of(context).showSnackBar(

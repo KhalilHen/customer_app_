@@ -19,17 +19,19 @@ final authController = AuthController();
       appBar: AppBar(
         actions:  [
           IconButton(onPressed:  () async {
-   print("before the function $user" );
 
 try {
 
 await authController.logOut();    
+                            if (!context.mounted) return;
+
                           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPage()));
 
 }
-catch(e) {}
+catch (e){
 
-   print(user);
+throw Exception("Went something wrong{e}");
+}
 
   },
   

@@ -123,7 +123,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             }
 
                           } catch (e) {
-                            formKey.currentState!.reset();
+                            passwordController.clear();
+
                             if (!context.mounted) return;
 
                             ScaffoldMessenger.of(context).showSnackBar(
