@@ -1,19 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hf_customer_app/pages/forgot_password.dart';
 import 'package:hf_customer_app/pages/homepage.dart';
 import 'package:hf_customer_app/pages/login.dart';
 import 'package:hf_customer_app/pages/sign_up.dart';
 
 class Routes {
-  static const String login = '/login';
-  static const String homePage = '/home';
-  static const String signUp = '/sign-up';
-  static const String forgotPasswordPage = '/reset-password';
+  static  GoRouter router({String? initialLocation}) {
 
-  static Map<String, WidgetBuilder> get routes => {
-    login: (context) => const LoginPage(),
-    homePage: (context) => const Homepage(),
-    signUp: (context) => const SignUpPage(),
-    forgotPasswordPage: (context) => const ForgotPasswordPage(),
-  };
+
+
+return GoRouter(
+
+
+initialLocation: initialLocation ?? '/',
+routes: [
+
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const LoginPage(
+          //? Here mabye later a global key to check if users is logged in
+        ),
+      ), 
+
+
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const LoginPage(
+        ),
+      ), 
+      
+        GoRoute(
+        path: '/signup',
+        builder: (context, state) => const SignUpPage(        ),
+      ),  GoRoute(
+        path: '/forgot-password',
+        builder: (context, state) => const ForgotPasswordPage(
+        ),
+      ),  GoRoute(
+        path: '/homepage',
+        builder: (context, state) => const Homepage(
+        ),
+      ),  
+      
+       GoRoute(
+        path: '/error',
+        builder: (context, state) => const LoginPage(
+        ),
+      ),
+],
+// errorBuilder: (context, state) => ErrorPage(
+//   message: 'Page not found: ${state.uri.toString()}',
+// ),
+);
+    
+  }
+
 }

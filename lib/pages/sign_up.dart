@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hf_customer_app/controller/auth_controller.dart';
-import 'package:hf_customer_app/pages/homepage.dart';
-import 'package:hf_customer_app/routes/routes.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -40,12 +39,14 @@ class _SignUpPageState extends State<SignUpPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
-                    'Registreer ',
+                    'Registreer',
                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 32),
 
                   TextFormField(
+                    key: const Key('emailField'),
+
                     controller: emailController,
                     decoration: const InputDecoration(
                       labelText: 'Email',
@@ -53,6 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       prefixIcon: Icon(Icons.email),
                     ),
                     keyboardType: TextInputType.emailAddress,
+                    // !! In future add stricter requirments for passwords based on local/ EU laws
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Vul iets in";
@@ -65,6 +67,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
+                    key: const Key('passwordField'),
+
                     controller: passwordController,
                     decoration: const InputDecoration(
                       labelText: 'Wachtwoord',
@@ -76,9 +80,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Vul iets in";
-                      } 
-                      if (value.length <= 6 ) {
-                          return "Wachtwoord is te zwak minimaal 6 characters";
+                      }
+                      if (value.length <= 6) {
+                        return "Wachtwoord is te zwak minimaal 6 characters";
                       }
 
                       return null;
@@ -87,8 +91,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Row(
                     children: [
                       TextButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, Routes.login),
+                        onPressed: () => context.go('/login'),
 
                         child: const Text("Login"),
                       ),
@@ -109,19 +112,16 @@ class _SignUpPageState extends State<SignUpPage> {
                         if (formKey.currentState?.validate() ?? false) {
                           try {
                             final succes = await authController.signUp(
-                              emailController.text,
+                              emailController.text,           
                               passwordController.text,
                             );
                             if (succes) {
-                              if (!context.mounted) return;
+                              if (!context.mounted) return; 
 
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) => const Homepage(),
-                                ),
-                              );
+
+                           context.go('/homepage');
+          
                             }
-
                           } catch (e) {
                             passwordController.clear();
 

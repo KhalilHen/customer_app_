@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hf_customer_app/routes/routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-Future<void> main() async {
-  
+import 'package:go_router/go_router.dart';
+Future<void> main({String? initialLocation}) async {
   WidgetsFlutterBinding.ensureInitialized();
-//!! This way for now to get a fast mvp done
+  //!! This way for now to get a fast mvp done
+
   await Supabase.initialize(
-    url: '',
-    anonKey: '',
+  // secret key
   );
   //TODO Improve this later so it's compatible with flutter analyze
   // const bool isProd = bool.fromEnvironment('dart.vm.product');
@@ -31,30 +30,22 @@ Future<void> main() async {
   // await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
   // runApp(MainApp(showDebugBanner: showDebugBanner));
 
-  runApp(const MainApp());
+  // runApp(const MainApp());
+    runApp(MainApp(initialLocation: initialLocation));
 
 }
-  final supabase = Supabase.instance.client;
+
+final supabase = Supabase.instance.client;
 
 class MainApp extends StatelessWidget {
-  // const MainApp({super.key, required this.showDebugBanner});
-  const MainApp({super.key});
+  final String? initialLocation;
 
-  // final bool showDebugBanner;
+  const MainApp({super.key, this.initialLocation});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // debugShowCheckedModeBanner: showDebugBanner,
-      debugShowCheckedModeBanner: false,
-
-  initialRoute:  Routes.login, // //
-
-
-      // home: const LoginPage(),
-
-      routes: Routes.routes,
-      // onUnknownRoute: , //Put here a default page
+    return MaterialApp.router(
+      routerConfig: Routes.router(initialLocation: initialLocation),
     );
   }
 }

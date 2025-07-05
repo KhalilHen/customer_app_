@@ -2,7 +2,7 @@ import 'package:hf_customer_app/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 //TODO add better error feedback
-class AuthController {
+class   AuthController {
   Future<bool> login(String email, String password) async {
     try {
       final response = await Supabase.instance.client.auth.signInWithPassword(
@@ -82,10 +82,10 @@ class AuthController {
       return null;
     } else {
       return user;
+      }
     }
-  }
 
-  bool isLoggedIn() {
+    bool isLoggedIn() {
     return supabase.auth.currentUser != null;
   }
 

@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-# !! Use this link as guidelines  https://medium.com/@sharmapraveen91/automate-flutter-ci-cd-with-github-actions-android-ios-testflight-deployment-89a1c903721a
+# !! I used this link as guidelines  https://medium.com/@sharmapraveen91/automate-flutter-ci-cd-with-github-actions-android-ios-testflight-deployment-89a1c903721a
 # TODO Add later IOS if needed/firebase testers ^^
 
 
@@ -59,6 +59,9 @@ jobs:
         run: flutter  test
 
 
+      - name: Run intergration tests
+        run: flutter test integration_test 
+
       - name: Build App Bundle
         run: flutter build appbundle --release
      
@@ -74,3 +77,36 @@ jobs:
         with:
            name: android-apk
            path: build/app/outputs/flutter-apk/app-release.apk
+
+# !! Ios pipelines for in future
+  # build-ios:
+  #     name: Build IOS   
+  #     runs-on: macos-latest
+  #     needs: build-android
+
+
+
+  #     steps: 
+  #       - uses: actions/checkout@v4
+  #       - name: Set up flutter
+  #       -  uses: subosito/flutter-action@v2
+  #           with:
+  #             flutter-version: '3.32.4'
+
+
+  #       - name: install dependencies
+  #             run: flutter pub get
+
+  #       - name: build ios
+  #        run: flutter build ios --release --no-codesign
+  #       - name: setup ruby
+  #             uses: ruby/setup-ruby@v1
+  #             with: 
+  #               ruby-version: '3.2'
+
+
+  #           - name: install fastlane 
+  #           run: gem install fastlane
+
+  #           - name: fastlane match setup 
+  #           run: | bundle exec fastlane match appstore

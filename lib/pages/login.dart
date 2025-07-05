@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hf_customer_app/controller/auth_controller.dart';
-import 'package:hf_customer_app/pages/homepage.dart';
-import 'package:hf_customer_app/routes/routes.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -34,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 32),
                   TextFormField(
+                    key: const Key("emailField"),
                     controller: emailController,
                     decoration: const InputDecoration(
                       labelText: 'Email',
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                       if (value == null || value.isEmpty) {
                         return "Vul iets in";
                       } else if (!value.contains('@')) {
-                        return 'Please enter a valid email';
+                        return 'Vul een geldige email in';
                       }
 
                       return null;
@@ -53,6 +53,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
+                    key: const Key("passwordField"),
+
                     controller: passwordController,
                     decoration: const InputDecoration(
                       labelText: 'Wachtwoord',
@@ -72,14 +74,13 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     children: [
                       TextButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, Routes.signUp),
+                        onPressed: () => context.go('/signup'),
 
                         child: const Text("Sign up"),
                       ),
                       const SizedBox(width: 40),
                       TextButton(
-                        onPressed: () => Navigator.pushNamed(context, Routes.forgotPasswordPage),
+                        onPressed: () => context.push('/forgot-password'),
                       
                         child: const Text("Forgot password?"),
                       ),
@@ -103,11 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (succes) {
                               if (!context.mounted) return;
 
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const Homepage(),
-                                ),
-                              );
+                             context.go('/homepage');
                             }
                           } catch (e) {
                             // formKey.currentState!.reset();
