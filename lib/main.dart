@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hf_customer_app/routes/routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:go_router/go_router.dart';
 Future<void> main({String? initialLocation}) async {
   WidgetsFlutterBinding.ensureInitialized();
   //!! This way for now to get a fast mvp done
 
   await Supabase.initialize(
-  // secret key
+
+    //! Test db keys
+    url: 'https://emshpkwskuaikbekxmqr.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtc2hwa3dza3VhaWtiZWt4bXFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk5MzU0NTYsImV4cCI6MjA2NTUxMTQ1Nn0.mbnA0hHRutY_IsjluKZhe4lK7eD_z-OHkKW2GCwAseo',
   );
   //TODO Improve this later so it's compatible with flutter analyze
   // const bool isProd = bool.fromEnvironment('dart.vm.product');
