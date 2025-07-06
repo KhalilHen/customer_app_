@@ -78,6 +78,7 @@ jobs:
            name: android-apk
            path: build/app/outputs/flutter-apk/app-release.apk
   build-ios:
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     name: Build iOS
     runs-on: macos-latest
     # needs: build    //!! add this if minutes goes too fast to 2k
