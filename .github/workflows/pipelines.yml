@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-# !! Use this link as guidelines  https://medium.com/@sharmapraveen91/automate-flutter-ci-cd-with-github-actions-android-ios-testflight-deployment-89a1c903721a
+# !! I used this link as guidelines  https://medium.com/@sharmapraveen91/automate-flutter-ci-cd-with-github-actions-android-ios-testflight-deployment-89a1c903721a
 # TODO Add later IOS if needed/firebase testers ^^
 
 
@@ -11,7 +11,9 @@ name: Flutter CI/CD
 
 on:
   push:
-    branches: [ "main", "dev", "feature/*" ]
+    branches: [ "main", "dev" ]
+    # feature/* 
+    # Removed feature check to save up free minutes
   pull_request:
     branches: [ "main", "dev" ]
 
@@ -58,6 +60,9 @@ jobs:
       - name: Run tests
         run: flutter  test
 
+          # !! Add this when using android, windows, emulator
+      # - name: Run intergration tests
+      #   run: flutter test integration_test  -d Linux. 
 
       - name: Build App Bundle
         run: flutter build appbundle --release
@@ -74,3 +79,37 @@ jobs:
         with:
            name: android-apk
            path: build/app/outputs/flutter-apk/app-release.apk
+  build-ios:
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+    name: Build iOS
+    runs-on: macos-latest
+    # needs: build    //!! add this if minutes goes too fast to 2k
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.4'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: List available simulators
+        run: xcrun simctl list devices
+
+      - name: Boot iOS simulator
+        run: |
+           xcrun simctl list devices available
+           DEVICE_ID=$(xcrun simctl create test_device com.apple.CoreSimulator.SimDeviceType.iPhone-15 com.apple.CoreSimulator.SimRuntime.iOS-17-0)
+           xcrun simctl boot $DEVICE_ID
+            xcrun simctl bootstatus $DEVICE_ID -b
+            echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+
+      - name: Run integration tests
+        run: flutter test integration_test/ -d $DEVICE_ID
+
+      - name: Build iOS (no code signing)
+        run: flutter build ios --release --no-codesign
