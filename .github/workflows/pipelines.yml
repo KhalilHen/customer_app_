@@ -11,7 +11,9 @@ name: Flutter CI/CD
 
 on:
   push:
-    branches: [ "main", "dev", "feature/*" ]
+    branches: [ "main", "dev" ]
+    # feature/* 
+    # Removed feature check to save up free minutes
   pull_request:
     branches: [ "main", "dev" ]
 
