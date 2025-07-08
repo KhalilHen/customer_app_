@@ -33,6 +33,7 @@ class   AuthController {
       final response = await supabase.auth.signUp(
         email: email,
         password: password,
+      // emailRedirectTo: 
       );
       if (response.user == null) {
         throw Exception("Aanmelden faalde");
@@ -88,6 +89,33 @@ class   AuthController {
     bool isLoggedIn() {
     return supabase.auth.currentUser != null;
   }
+
+  // Future<bool> resetPassword(String email)async {
+
+  //     try {
+
+  //         final response = await supabase.auth.resetPasswordForEmail(
+            
+  //           email = email,
+  //           redirectTo:  ""
+            
+  //           );
+  //     }
+  //     catch (e) {
+
+  //     }
+      
+
+
+  // }
+
+  // Future<bool> updateUserPassword(password)async {
+
+  //   final response = await supabase.auth.updateUser(
+
+  //     password = password
+  //   );
+  // }
 
   String getAuthErrorMessages(AuthException e) {
     switch (e.code) {

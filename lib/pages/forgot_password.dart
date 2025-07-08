@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hf_customer_app/controller/auth_controller.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -11,7 +12,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final bool _isLoading = false;
-
+  final authController = AuthController();
   @override
   void dispose() {
     emailController.dispose();
@@ -47,7 +48,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {}
+                        if (formKey.currentState!.validate()) {
+
+
+                          // authController.resetPassword();
+                        }
                       },
                       child: const Text('Send Reset Link'),
                     ),
