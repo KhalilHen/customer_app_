@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hf_customer_app/pages/forgot_password.dart';
 import 'package:hf_customer_app/pages/homepage.dart';
 import 'package:hf_customer_app/pages/login.dart';
+import 'package:hf_customer_app/pages/restaurant_overview_.dart';
 import 'package:hf_customer_app/pages/sign_up.dart';
 
 class Routes {
@@ -40,7 +41,15 @@ routes: [
         path: '/homepage',
         builder: (context, state) => const Homepage(
         ),
-      ),  
+      ),
+
+      GoRoute(
+        
+        
+        path: '/restaurants',
+        builder: (context, state) => const RestaurantOverviewPage(),
+      
+      )  ,
       
        GoRoute(
         path: '/error',

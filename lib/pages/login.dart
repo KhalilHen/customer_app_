@@ -103,8 +103,9 @@ class _LoginPageState extends State<LoginPage> {
 
                             if (succes) {
                               if (!context.mounted) return;
+                            //  context.go('/homepage');
+                             context.go('/restaurants');
 
-                             context.go('/homepage');
                             }
                           } catch (e) {
                             // formKey.currentState!.reset();
