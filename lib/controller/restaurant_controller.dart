@@ -5,8 +5,41 @@ import 'package:hf_customer_app/main.dart';
 import 'package:hf_customer_app/models/restaurant.dart';
 import 'package:hf_customer_app/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/material.dart';
 
 class RestaurantController {
+  Stream<List<Restaurant>> fetchAllRestaurants() {
+    //TODO Figure out if try catch is needed when you output it as a streambuilder
+    final response = supabase
+        .from('restaurant')
+        .stream(primaryKey: ['id'])
+        .order('name', ascending: true);
+        // .order('');
+
+    return response.map((data) {
+      // print("test. $data");
+      return data
+          .map((row) => Restaurant.fromJson(row))
+          .where((restaurant) => restaurant.isOpen && restaurant.isActive)
+          .toList();
+    });
+  }
+
+  Stream<List<Restaurant>> fetchClosedRestaurants() {
+    final response = supabase
+        .from('restaurant')
+        .stream(primaryKey: ['id'])
+        .order('name', ascending: true);
+
+    return response.map((data) {
+      return data
+          .map((row) => Restaurant.fromJson(row))
+          .where(
+            (restaurant) => restaurant.isOpen == false && restaurant.isActive,
+          )
+          .toList();
+    });
+  }
   // Future<List<Restaurant>> fetchRestaurants() async {
   //   Future<Stream<List<Restaurant>>> fetchRestaurants() async {
   //     try {
@@ -42,26 +75,25 @@ class RestaurantController {
 
   // Future<Restaurant> fetchSpecificRestaurant() async {}
 
-//   Stream<List<Restaurant>> getNearbyRestaurants(
-//     Position userPosition,
-//   )  {
-//     double delta = 0.1;
+  //   Stream<List<Restaurant>> getNearbyRestaurants(
+  //     Position userPosition,
+  //   )  {
+  //     double delta = 0.1;
 
-//     final response = supabase
-//         .from('restaurant')
-//         .stream(primaryKey: ['id']).map((data) {
+  //     final response = supabase
+  //         .from('restaurant')
+  //         .stream(primaryKey: ['id']).map((data) {
 
-//           return data.where((Restaurant)
-          
-          
-//           {
-// double distance =  Geolocator.distanceBetween(userPosition.latitude,  userPosition.longitude, Restaurant['latitude'], Restaurant['longitude'],  );
+  //           return data.where((Restaurant)
 
-// return distance <= 1000;
+  //           {
+  // double distance =  Geolocator.distanceBetween(userPosition.latitude,  userPosition.longitude, Restaurant['latitude'], Restaurant['longitude'],  );
 
-//           }).toList();
+  // return distance <= 1000;
 
-//         });
+  //           }).toList();
 
-//   }
+  //         });
+
+  //   }
 }
