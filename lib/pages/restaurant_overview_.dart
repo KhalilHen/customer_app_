@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hf_customer_app/controller/restaurant_controller.dart';
 import 'package:hf_customer_app/models/restaurant.dart';
+import 'package:hf_customer_app/service/analytics_service.dart';
 
 class RestaurantOverviewPage extends StatefulWidget {
   const RestaurantOverviewPage({super.key});
@@ -20,69 +21,93 @@ class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
 
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return const CircularProgressIndicator();
+     return  const Center(
 
+                child: CircularProgressIndicator(),
+              );
             case ConnectionState.none:
-              return const LinearProgressIndicator();
+            AnalyticsService.logEvent('connection_state_none', page: 'restaurant_overview_page');
+  return const Center(child: CircularProgressIndicator());
 
             case ConnectionState.active:
-              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                final List<Restaurant> restaurants = snapshot.data!;
-
-                return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    final restaurant = restaurants[index];
-
-                    return GestureDetector(
-
-                         onTap: () {
-                                         //TODO Add here route
-                                        },
-                      child: Hero(
-                        tag: "Restaurant-${restaurant.id}",
-                        child: Card(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(restaurant.name),
-                        
-                              const SizedBox(height: 20),
-                        
-                              Text(restaurant.description ?? "geen tekst"),
-                              Text(restaurant.phoneNumber),
-                        
-                              const SizedBox(height: 30),
-                        
-                              restaurant.restaurantPreviewBanner != null
-                                  ? Image.network(
-                                      restaurant.restaurantPreviewBanner!,
-                        
-                                      height: 150,
-                                      width: 300,
-                                    )
-                                  : const Icon(Icons.hide_image),
-                        
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-
-                    // return RestaurantCard();
-                  },
-                );
-              } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+              // return const Center(child: LinearProgressIndicator());
                 return const Center(
-                  child: Text(
-                    "Sorry der zijn momenteel geen restaurants bij u in de buurt",
-                  ),
-                );
-              } else {
-                return const Center(
-                  child: Text("Sorry der is niks beschikbaar momenteel"),
-                );
-              }
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.restaurant_menu, size: 64, color: Colors.grey),
+        SizedBox(height: 16),
+        Text('No restaurants loaded yet'),
+        SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: null,
+          child: Text('Load Restaurants'),
+        ),
+      ],
+    ),
+  );
+            
+              // return const LinearProgressIndicator();
+            
+              // if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+              //   final List<Restaurant> restaurants = snapshot.data!;
+
+              //   return ListView.builder(
+              //     itemCount: snapshot.data!.length,
+              //     itemBuilder: (context, index) {
+              //       final restaurant = restaurants[index];
+
+              //       return GestureDetector(
+
+              //            onTap: () {
+              //                            //TODO Add here route
+              //                           },
+              //         child: Hero(
+              //           tag: "Restaurant-${restaurant.id}",
+              //           child: Card(
+              //             child: Column(
+              //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //               children: [
+              //                 Text(restaurant.name),
+                        
+              //                 const SizedBox(height: 20),
+                        
+              //                 Text(restaurant.description ?? "geen tekst"),
+              //                 Text(restaurant.phoneNumber),
+                        
+              //                 const SizedBox(height: 30),
+                        
+              //                 restaurant.restaurantPreviewBanner != null
+              //                     ? Image.network(
+              //                         restaurant.restaurantPreviewBanner!,
+                        
+              //                         height: 150,
+              //                         width: 300,
+              //                       )
+              //                     : const Icon(Icons.hide_image),
+                        
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       );
+
+              //       // return RestaurantCard();
+              //     },
+              //   );
+              // } 
+              
+              // else if (snapshot.hasData && snapshot.data!.isEmpty) {
+              //   return const Center(
+              //     child: Text(
+              //       "Sorry der zijn momenteel geen restaurants bij u in de buurt",
+              //     ),
+              //   );
+              // } else {
+              //   return const Center(
+              //     child: Text("Sorry der is niks beschikbaar momenteel"),
+              //   );
+              // }
             case ConnectionState.done:
               return Center(
                 child: Padding(
