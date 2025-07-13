@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hf_customer_app/controller/restaurant_controller.dart';
-import 'package:hf_customer_app/models/restaurant.dart';
 import 'package:hf_customer_app/service/analytics_service.dart';
 
 class RestaurantOverviewPage extends StatefulWidget {
