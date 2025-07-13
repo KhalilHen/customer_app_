@@ -48,7 +48,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: Routes.router(initialLocation: '/restaurants'),
+      routerConfig: Routes.router(initialLocation: initialLocation),
     );
   }
 }

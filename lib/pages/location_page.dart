@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:hf_customer_app/controller/location_controller.dart';
 
 class LocationPage extends StatefulWidget {
@@ -10,8 +9,8 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
-    String? _currentAddress;
-  Position? _currentPosition;
+    // String? _currentAddress;
+  // Position? _currentPosition;
 
   final locationController = LocationController();
   @override

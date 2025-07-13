@@ -1,11 +1,6 @@
-import 'dart:convert';
 
-import 'package:geolocator/geolocator.dart';
 import 'package:hf_customer_app/main.dart';
 import 'package:hf_customer_app/models/restaurant.dart';
-import 'package:hf_customer_app/main.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter/material.dart';
 
 class RestaurantController {
   Stream<List<Restaurant>> fetchAllRestaurants() {

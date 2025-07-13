@@ -32,7 +32,6 @@ class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    print( "Lengte ${snapshot.data!.length} ",);
                     final restaurant = restaurants[index];
 
                     return GestureDetector(

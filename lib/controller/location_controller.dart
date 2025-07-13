@@ -1,16 +1,14 @@
 // import 'dart:ffi';
-import 'dart:math';
+// import 'dart:math'; 
 
 import 'package:geolocator/geolocator.dart';
-import 'package:hf_customer_app/main.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LocationController {
 
   //!! The handle location permission works good  tested it on android/ios/web for now i use just fetch all the restaurants to complete faster the MVP.
   // TODO Optimize this later.
   Future<bool> handleLocationPermission() async {
-    var accuracy = await Geolocator.getLocationAccuracy();
+    // var accuracy = await Geolocator.getLocationAccuracy();
     // Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     // Position position = await Geolocator.getCurrentPosition(locationSettings: accuracy. );
 
