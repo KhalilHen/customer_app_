@@ -40,6 +40,14 @@ jobs:
       # Consider passing '--fatal-infos' for slightly stricter analysis.
 
 
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+         accept-android-sdk-licenses: true
+
+
+
     # !! This left out for now as i am currently developing solo
     # TODO Make later that when you commit it runs automatic  dart format . so this will not break everytime.
       # - name: Check formatting
@@ -63,10 +71,6 @@ jobs:
           # !! Add this when using android, windows, emulator
       # - name: Run intergration tests
       #   run: flutter test integration_test  -d Linux. 
-      - name: Accept Android SDK licenses
-        run: yes | sdkmanager --licenses
-     
-     
       - name: Build App Bundle
         run: flutter build appbundle --release
      
