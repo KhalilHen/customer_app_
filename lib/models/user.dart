@@ -1,9 +1,11 @@
+import 'package:hf_customer_app/enum/role_enum.dart';
+
 class User {
   final String id;
   final String email;
   final String? firstName;
   final String? lastName;
-  final String role;
+  final Roles role;
 
   final String? phoneNumber;
   // final DateTime created_at
@@ -35,7 +37,7 @@ class User {
           json['firstName'] as String? ?? json['first_name'] as String? ?? '',
       lastName:
           json['lastName'] as String? ?? json['last_name'] as String? ?? '',
-      role: json['role'] as String,
+      role: json['role'] as Roles,
       phoneNumber:
           json['phoneNumber'] as String? ?? json['phone_number'] as String?,
       // createdAt: json['createdAt'] as DateTime? ?? json['created_at'] as DateTime?,
