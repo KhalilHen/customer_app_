@@ -63,7 +63,10 @@ jobs:
           # !! Add this when using android, windows, emulator
       # - name: Run intergration tests
       #   run: flutter test integration_test  -d Linux. 
-
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses
+     
+     
       - name: Build App Bundle
         run: flutter build appbundle --release
      
