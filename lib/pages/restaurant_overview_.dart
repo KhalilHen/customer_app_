@@ -49,10 +49,10 @@ class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
 
 
                           context.push('/restaurant-specific?id=$restaurant',
+
                           
                           extra: restaurant
                            );
-                                         //TODO Add here route
                                         },
                       child: Hero(
                         tag: "Restaurant-${restaurant.id}",

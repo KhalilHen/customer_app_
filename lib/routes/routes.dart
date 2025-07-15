@@ -59,6 +59,9 @@ class Routes {
           },
         ),
 
+// GoRoute(path: '/test-restaurant',
+//   builder: (context, state) => const RestaurantView(),
+// ),
         GoRoute(
           path: '/locatie',
           builder: (context, state) => const LocationPage(),
