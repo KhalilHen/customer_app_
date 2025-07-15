@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hf_customer_app/controller/auth_controller.dart';
 import 'package:hf_customer_app/pages/login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -25,9 +26,7 @@ class _HomepageState extends State<Homepage> {
                 await authController.logOut();
                 if (!context.mounted) return;
 
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
+              context.go('/login');
               } catch (e) {
                 throw Exception("Went something wrong{e}");
               }
@@ -39,6 +38,13 @@ class _HomepageState extends State<Homepage> {
       ),
 
       body: Center(child: Text("Welcome ${user?.email ?? 'Guest'}!")),
+
+
+      floatingActionButton: ElevatedButton(onPressed: () {
+
+        authController.getUser();
+    print(user);
+      }, child: const Text("Test")),
     );
   }
 }
