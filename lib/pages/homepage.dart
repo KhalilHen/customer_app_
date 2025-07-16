@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hf_customer_app/controller/auth_controller.dart';
-import 'package:hf_customer_app/pages/login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Homepage extends StatefulWidget {

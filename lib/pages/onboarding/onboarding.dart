@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hf_customer_app/service/onboarding_service.dart';
 
 class Onboarding extends StatefulWidget {
@@ -21,7 +22,8 @@ class _OnboardingState extends State<Onboarding> {
       floatingActionButton: FloatingActionButton(onPressed: () async {
 
         await OnboardingService.markOnboardingAsSeen();
-        
+        if(!context.mounted) return ;
+          context.go('/restaurants');
       }),
     );
   }

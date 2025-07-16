@@ -138,30 +138,6 @@ class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
           }
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        width: 200,
-        height: 60,
-        child: ElevatedButton(
-          onPressed: () {
-            restaurantController.fetchAllRestaurants();
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12), // Rounded corners
-            ),
-          ),
-          child: const Text(
-            "Test button",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18, // Bigger text
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
     );
   }
 
