@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hf_customer_app/controller/auth_controller.dart';
 import 'package:hf_customer_app/controller/restaurant_controller.dart';
 import 'package:hf_customer_app/models/restaurant.dart';
 import 'package:hf_customer_app/service/analytics_service.dart';
@@ -13,9 +14,22 @@ class RestaurantOverviewPage extends StatefulWidget {
 
 class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
   final restaurantController = RestaurantController();
+  final authController = AuthController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.orange,
+        actions: [
+          IconButton(onPressed: () {
+
+            authController.logOut();
+
+            context.go('/login');
+          }, icon: const Icon(Icons.login_outlined))
+        ],
+      ),
       body: StreamBuilder(
         stream: restaurantController.fetchAllRestaurants(),
         builder: (context, snapshot) {
@@ -124,7 +138,7 @@ class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
                       ),
                       const SizedBox(
                         height: 16,
-                      ), // Space between text and button
+                      ), // Space between text and butto
                       ElevatedButton(
                         onPressed: () {
                           setState(() {});
@@ -138,6 +152,11 @@ class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
           }
         },
       ),
+
+      floatingActionButton: FloatingActionButton(onPressed: ( ) {
+
+        authController.getUser();
+      }),
     );
   }
 

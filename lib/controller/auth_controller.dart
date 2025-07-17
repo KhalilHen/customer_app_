@@ -75,7 +75,7 @@ class AuthController {
 
   Future<User?> getUser() async {
     final User? user = Supabase.instance.client.auth.currentUser;
-
+    print(user);
     if (user == null) {
       return null;
     } else {

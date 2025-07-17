@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hf_customer_app/models/restaurant.dart';
 import 'package:hf_customer_app/pages/forgot_password.dart';
@@ -8,24 +9,40 @@ import 'package:hf_customer_app/pages/onboarding/onboarding.dart';
 import 'package:hf_customer_app/pages/restaurant_overview_.dart';
 import 'package:hf_customer_app/pages/restaurant_view.dart';
 import 'package:hf_customer_app/pages/sign_up.dart';
+import 'package:hf_customer_app/routes/bottom_nav_bar.dart';
 import 'package:hf_customer_app/service/auth_gate.dart';
-
+final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 class Routes {
   static GoRouter router({String? initialLocation}) {
     return GoRouter(
       initialLocation: initialLocation ?? '/',
       // navigatorKey: rootNavigatorKey,
+      navigatorKey: rootNavigatorKey,
       routes: [
+              StatefulShellRoute.indexedStack(
+          builder: (context, state, navigationShell) =>
+              BottomNavBar(navigationShell: navigationShell),
+          branches: [
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/',
+                  builder: (context, state) => const RestaurantOverviewPage(),
+                ),
+              ],
+            ),
+            // StatefulShellBranch(
+            //   routes: [
+            //     GoRoute(
+            //       path: '/profile',
+            //       builder: (context, state) => const ProfilePage(),
+            //     ),
+            //   ],
+            // ),
+          ],
+        ),
 
-
-        // ShellRoute(
-
-        //   routes: const [
-              
-            
-        //   ],
-       
-        // ),
+        
         GoRoute(
           path: '/',
           builder: (context, state) => const AuthGate(
