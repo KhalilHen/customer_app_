@@ -14,7 +14,18 @@ class Routes {
   static GoRouter router({String? initialLocation}) {
     return GoRouter(
       initialLocation: initialLocation ?? '/',
+      // navigatorKey: rootNavigatorKey,
       routes: [
+
+
+        // ShellRoute(
+
+        //   routes: const [
+              
+            
+        //   ],
+       
+        // ),
         GoRoute(
           path: '/',
           builder: (context, state) => const AuthGate(
