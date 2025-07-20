@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:hf_customer_app/controller/menu_category_controller.dart';
 import 'package:hf_customer_app/controller/menu_controller.dart';
@@ -584,7 +586,6 @@ class _RestaurantViewState extends State<RestaurantView> {
               CustomQuantityCounter(
                 itemId: item.id,
                 onChanged: () {
-                  print("Quanitity changed");
                 },
               ),
           

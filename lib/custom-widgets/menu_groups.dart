@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hf_customer_app/controller/menu_controller.dart';
 import 'package:hf_customer_app/custom-widgets/menu_options_widget.dart';
-import 'package:hf_customer_app/custom-widgets/menu_quantity_widget.dart';
 import 'package:hf_customer_app/models/menu_item.dart';
 import 'package:hf_customer_app/models/menu_item_option_group.dart';
 
@@ -11,10 +10,10 @@ class CustomMenuGroupWidget extends StatefulWidget {
   const CustomMenuGroupWidget({super.key, required this.item});
 
   @override
-  _CustomMenuGroupWidgetState createState() => _CustomMenuGroupWidgetState();
+  CustomMenuGroupWidgetState createState() => CustomMenuGroupWidgetState();
 }
 
-class _CustomMenuGroupWidgetState extends State<CustomMenuGroupWidget> {
+class CustomMenuGroupWidgetState extends State<CustomMenuGroupWidget> {
   final menuController = MenuItemController();
 
   @override

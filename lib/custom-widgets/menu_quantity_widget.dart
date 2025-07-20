@@ -15,7 +15,6 @@ class QuantityCounterNotifier extends StateNotifier<List<int>> {
   
   QuantityCounterNotifier() : super([]);
 
-  @override
   void add(int number) {
     state = [...state, number];
   }

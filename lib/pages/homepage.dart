@@ -42,7 +42,6 @@ class _HomepageState extends State<Homepage> {
       floatingActionButton: ElevatedButton(onPressed: () {
 
         authController.getUser();
-    print(user);
       }, child: const Text("Test")),
     );
   }

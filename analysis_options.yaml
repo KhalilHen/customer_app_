@@ -3,7 +3,7 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   plugins:
     - dart_code_metrics
-    - custom_lint
+    # - custom_lint
 
   strong-mode:
     implicit-casts: false

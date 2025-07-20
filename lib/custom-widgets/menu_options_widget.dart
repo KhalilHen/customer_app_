@@ -102,7 +102,7 @@ return FilterChip(
       ],
     ),
     backgroundColor: Colors.grey[50],
-    selectedColor: Colors.deepOrange.withOpacity(0.2),
+    selectedColor: Colors.deepOrange.withAlpha(2),
     checkmarkColor: Colors.deepOrange,
     side: BorderSide(color: Colors.grey[300]!, width: 1),
     selected: false, // Manage with your state
@@ -111,7 +111,7 @@ return FilterChip(
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
 
     elevation: isSelected ? 2 : 0,
-    shadowColor: Colors.deepOrange.withOpacity(0.3),
+    shadowColor: Colors.deepOrange.withAlpha(2),
   );
 
   }

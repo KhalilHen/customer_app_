@@ -1,7 +1,6 @@
 // !! Menu item option groups e.g Toppins, dressings, sizes, etc
 
 import 'package:decimal/decimal.dart';
-import 'package:flutter/src/material/chip.dart';
 
 class MenuItemOptions {
   final int id;
@@ -48,5 +47,4 @@ class MenuItemOptions {
     );
   }
 
-  static map(Chip Function(dynamic option) param0) {}
 }

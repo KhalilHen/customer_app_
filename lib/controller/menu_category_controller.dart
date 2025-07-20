@@ -22,7 +22,6 @@ Future<List<MenuCategory>> fetchCategoryFromRestaurant(restaurantId) async {
       }
 
 
-  print(response);
       return response.map<MenuCategory>((categoryData) {
     return MenuCategory.fromJson(categoryData);
   }).toList();
