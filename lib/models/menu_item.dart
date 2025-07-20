@@ -38,6 +38,7 @@ class MenuItem {
       //       ? Decimal.parse(json['base_price'].toString())
       //       : Decimal.zero,
       basePrice: Decimal.parse(json['base_price'].toString()),
+
               isAvailable: json['is_available'] as bool? ?? true,
 
       isActive: json['is_active'] as bool? ?? true,

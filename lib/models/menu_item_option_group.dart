@@ -18,7 +18,7 @@ class MenuItemOptionGroup {
     required this.id,
       required this.menuItemId,
     required this.name,
-    this.description, // Remove 'required' since it's nullable
+    this.description, 
       required this.isRequired,
       required this.minSelections,
       required this.maxSelections,

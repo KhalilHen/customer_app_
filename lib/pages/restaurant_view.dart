@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hf_customer_app/controller/menu_category_controller.dart';
 import 'package:hf_customer_app/controller/menu_controller.dart';
 import 'package:hf_customer_app/controller/order_controller.dart';
+import 'package:hf_customer_app/custom-widgets/menu_groups.dart';
 import 'package:hf_customer_app/custom-widgets/menu_quantity_widget.dart';
 import 'package:hf_customer_app/models/menu_category.dart';
 import 'package:hf_customer_app/models/menu_item.dart';
@@ -18,17 +19,12 @@ class RestaurantView extends StatefulWidget {
 }
 
 class _RestaurantViewState extends State<RestaurantView> {
-  
-
   final orderController = OrderController();
   final menuCategoryController = MenuCategoryController();
-  final menuItemController = MenuItemController(); 
+  final menuItemController = MenuItemController();
 
   @override
-  Widget build(BuildContext context ) {
-
-
-
+  Widget build(BuildContext context) {
     if (!widget.restaurant.isOpen) {
       return const Scaffold(
         body: Center(child: Text("Sorry restaurant is momenteel gesloten")),
@@ -307,8 +303,8 @@ class _RestaurantViewState extends State<RestaurantView> {
         ),
 
         // Menu Items for this category
-        FutureBuilder<List<MenuItem>>(
-          future: menuItemController.fetchMenuItems(category.id),
+        StreamBuilder<List<MenuItem>>(
+          stream: menuItemController.fetchMenuItems(category.id),
 
           // (category.id),
           builder: (context, itemSnapshot) {
@@ -512,117 +508,118 @@ class _RestaurantViewState extends State<RestaurantView> {
           ),
         ),
         padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Handle bar
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Item image if available
-            if (item.image != null && item.image!.isNotEmpty)
-              Container(
-                width: double.infinity,
-                height: 200,
-                margin: const EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.grey[300],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    item.image!,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Center(
-                        child: Icon(
-                          Icons.fastfood,
-                          color: Colors.grey,
-                          size: 60,
-                        ),
-                      );
-                    },
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Handle bar
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(2),
                   ),
                 ),
               ),
-
-            Text(
-              item.name,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-
-            const SizedBox(height: 8),
-
-            if (item.description != null && item.description!.isNotEmpty)
-              Text(
-                item.description!,
-                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-              ),
-
-            const SizedBox(height: 16),
-
-            Text(
-              '€${item.basePrice.toStringAsFixed(2)}',
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.deepOrange,
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-           CustomQuantityCounter(
-
-            itemId: item.id,
-            onChanged: () {
-              print("Quanitity changed");
-            },
-          ),
-
-            const SizedBox(height: 20),
-
-            // TODO: Add option groups and customization here
-            // You can add FutureBuilder for option groups
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: Add to cart logic with customizations
-                  Navigator.pop(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
+          
+              const SizedBox(height: 20),
+          
+              // Item image if available
+              if (item.image != null && item.image!.isNotEmpty)
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  margin: const EdgeInsets.only(bottom: 20),
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
+                    color: Colors.grey[300],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      item.image!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Center(
+                          child: Icon(
+                            Icons.fastfood,
+                            color: Colors.grey,
+                            size: 60,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-                child: const Text(
-                  'Toevoegen aan winkelwagen',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+          
+              Text(
+                item.name,
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+          
+              const SizedBox(height: 8),
+          
+              if (item.description != null && item.description!.isNotEmpty)
+                Text(
+                  item.description!,
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                ),
+          
+              const SizedBox(height: 16),
+          
+              Text(
+                '€${item.basePrice.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepOrange,
+                ),
+              ),
+          
+              const SizedBox(height: 16),
+          
+              CustomQuantityCounter(
+                itemId: item.id,
+                onChanged: () {
+                  print("Quanitity changed");
+                },
+              ),
+          
+              const SizedBox(height: 20),
+          
+              CustomMenuGroupWidget(item: item),
+          
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // TODO: Add to cart logic with customizations
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepOrange,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    'Toevoegen aan winkelwagen',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-
-            SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
-          ],
+          
+              SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
+            ],
+          ),
         ),
       ),
     );
