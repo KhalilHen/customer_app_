@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hf_customer_app/controller/auth_controller.dart';
 import 'package:hf_customer_app/controller/restaurant_controller.dart';
+import 'package:hf_customer_app/models/restaurant.dart';
 import 'package:hf_customer_app/service/analytics_service.dart';
 
 class RestaurantOverviewPage extends StatefulWidget {
@@ -11,9 +14,22 @@ class RestaurantOverviewPage extends StatefulWidget {
 
 class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
   final restaurantController = RestaurantController();
+  final authController = AuthController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.orange,
+        actions: [
+          IconButton(onPressed: () {
+
+            authController.logOut();
+
+            context.go('/login');
+          }, icon: const Icon(Icons.login_outlined))
+        ],
+      ),
       body: StreamBuilder(
         stream: restaurantController.fetchAllRestaurants(),
         builder: (context, snapshot) {
@@ -30,83 +46,74 @@ class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
 
             case ConnectionState.active:
               // return const Center(child: LinearProgressIndicator());
-                return const Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(Icons.restaurant_menu, size: 64, color: Colors.grey),
-        SizedBox(height: 16),
-        Text('No restaurants loaded yet'),
-        SizedBox(height: 8),
-        ElevatedButton(
-          onPressed: null,
-          child: Text('Load Restaurants'),
-        ),
-      ],
-    ),
-  );
-            
+        
               // return const LinearProgressIndicator();
             
-              // if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              //   final List<Restaurant> restaurants = snapshot.data!;
+              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                final List<Restaurant> restaurants = snapshot.data!;
 
-              //   return ListView.builder(
-              //     itemCount: snapshot.data!.length,
-              //     itemBuilder: (context, index) {
-              //       final restaurant = restaurants[index];
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final restaurant = restaurants[index];
 
-              //       return GestureDetector(
+                    return GestureDetector(
 
-              //            onTap: () {
-              //                            //TODO Add here route
-              //                           },
-              //         child: Hero(
-              //           tag: "Restaurant-${restaurant.id}",
-              //           child: Card(
-              //             child: Column(
-              //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //               children: [
-              //                 Text(restaurant.name),
-                        
-              //                 const SizedBox(height: 20),
-                        
-              //                 Text(restaurant.description ?? "geen tekst"),
-              //                 Text(restaurant.phoneNumber),
-                        
-              //                 const SizedBox(height: 30),
-                        
-              //                 restaurant.restaurantPreviewBanner != null
-              //                     ? Image.network(
-              //                         restaurant.restaurantPreviewBanner!,
-                        
-              //                         height: 150,
-              //                         width: 300,
-              //                       )
-              //                     : const Icon(Icons.hide_image),
-                        
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //       );
+                         onTap: () {
 
-              //       // return RestaurantCard();
-              //     },
-              //   );
-              // } 
+
+                          context.push('/restaurant-specific?id=$restaurant',
+
+                          
+                          extra: restaurant
+                           );
+                                        },
+                      child: Hero(
+                        tag: "Restaurant-${restaurant.id}",
+                        child: Card(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(restaurant.name),
+                        
+                              const SizedBox(height: 20),
+                        
+                              Text(restaurant.description ?? "geen tekst"),
+                              Text(restaurant.phoneNumber),
+                        
+                              const SizedBox(height: 30),
+                        
+                              restaurant.restaurantPreviewBanner != null
+                                  ? Image.network(
+                                      restaurant.restaurantPreviewBanner!,
+                        
+                                      height: 150,
+                                      width: 300,
+                                    )
+                                  : const Icon(Icons.hide_image),
+                        
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+
+                    // return RestaurantCard();
+                  },
+                );
+              } 
               
-              // else if (snapshot.hasData && snapshot.data!.isEmpty) {
-              //   return const Center(
-              //     child: Text(
-              //       "Sorry der zijn momenteel geen restaurants bij u in de buurt",
-              //     ),
-              //   );
-              // } else {
-              //   return const Center(
-              //     child: Text("Sorry der is niks beschikbaar momenteel"),
-              //   );
-              // }
+              else if (snapshot.hasData && snapshot.data!.isEmpty) {
+                return const Center(
+                  child: Text(
+                    "Sorry der zijn momenteel geen restaurants bij u in de buurt",
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text("Sorry der is niks beschikbaar momenteel"),
+                );
+              }
             case ConnectionState.done:
               return Center(
                 child: Padding(
@@ -131,7 +138,7 @@ class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
                       ),
                       const SizedBox(
                         height: 16,
-                      ), // Space between text and button
+                      ), // Space between text and butto
                       ElevatedButton(
                         onPressed: () {
                           setState(() {});
@@ -145,30 +152,11 @@ class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
           }
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        width: 200,
-        height: 60,
-        child: ElevatedButton(
-          onPressed: () {
-            restaurantController.fetchAllRestaurants();
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12), // Rounded corners
-            ),
-          ),
-          child: const Text(
-            "Test button",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18, // Bigger text
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+
+      floatingActionButton: FloatingActionButton(onPressed: ( ) {
+
+        authController.getUser();
+      }),
     );
   }
 

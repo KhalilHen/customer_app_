@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hf_customer_app/routes/routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -34,7 +35,7 @@ Future<void> main({String? initialLocation}) async {
   // runApp(MainApp(showDebugBanner: showDebugBanner));
 
   // runApp(const MainApp());
-    runApp(MainApp(initialLocation: initialLocation));
+    runApp(ProviderScope(child: MainApp(initialLocation: initialLocation)));
 
 }
 

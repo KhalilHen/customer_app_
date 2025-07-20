@@ -95,11 +95,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                         child: const Text("Login"),
                       ),
-                      const SizedBox(width: 40),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text("Forgot password?"),
-                      ),
+                    
                     ],
                   ),
 
