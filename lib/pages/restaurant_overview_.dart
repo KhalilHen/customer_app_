@@ -153,10 +153,7 @@ class _RestaurantOverviewPageState extends State<RestaurantOverviewPage> {
         },
       ),
 
-      floatingActionButton: FloatingActionButton(onPressed: ( ) {
-
-        authController.getUser();
-      }),
+    
     );
   }
 

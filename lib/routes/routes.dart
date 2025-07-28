@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hf_customer_app/custom-widgets/view_cart_button.dart';
 import 'package:hf_customer_app/models/restaurant.dart';
 import 'package:hf_customer_app/pages/forgot_password.dart';
 import 'package:hf_customer_app/pages/homepage.dart';
@@ -49,6 +51,7 @@ class Routes {
             //? Here mabye later a global key to check if users is logged in
           ),
         ),
+        GoRoute(path:'/cart', builder: (context, state) => ViewCartButton(onPressed: () {  },),),
 
         GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
 
@@ -81,8 +84,15 @@ class Routes {
           path: '/restaurant-specific',
 
           builder: (context, state) {
-            final restaurant = state.extra as Restaurant;
-            return RestaurantView(restaurant: restaurant);
+            final extra = state.extra;
+            if(extra is! Restaurant) {
+              //TODO Change this into error page
+              return const Scaffold(
+                body: Center(child: Text("Der ging iets mis met het ophalen van de restaurant herstart de app a.u.b"),),
+              );
+            }
+            // final restaurant = state.extra as Restaurant;
+            return RestaurantView(restaurant: extra);
           },
         ),
 

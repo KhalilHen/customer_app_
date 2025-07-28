@@ -33,16 +33,12 @@ class MenuItem {
       name: json['name'] as String,
       description: json['description'] as String?,
       image: json['image'] as String?,
-      // Convert to Decimal - assuming the DB stores it as a number
-      //  basePrice: json['base_price'] != null 
-      //       ? Decimal.parse(json['base_price'].toString())
-      //       : Decimal.zero,
+   
       basePrice: Decimal.parse(json['base_price'].toString()),
 
               isAvailable: json['is_available'] as bool? ?? true,
 
       isActive: json['is_active'] as bool? ?? true,
-      // displayOrder: json['display_order '] as int,
     );
   }
 }

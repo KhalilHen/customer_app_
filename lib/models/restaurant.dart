@@ -55,7 +55,6 @@ class Restaurant {
       isActive:
           json['isActive'] as bool? ?? json['is_active'] as bool? ?? false,
       featured: json['featured'] as bool? ?? false,
-      // verified: RestaurantVerification(json['verified']),
       verified: RestaurantVerification.fromJson(json['verified']),
 
       isOpen: json['is_open'] as bool,

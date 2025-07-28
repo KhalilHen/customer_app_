@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// class QuanitityCounter extends ConsumerWidget {
-//   const QuanitityCounter({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Placeholder();
-//   }
-
-
-
 class QuantityCounterNotifier extends StateNotifier<List<int>> {
   
   QuantityCounterNotifier() : super([]);
@@ -84,11 +74,3 @@ class CustomQuantityCounter extends ConsumerWidget {
     );
   }
 }
-// class Quanitity extends StatelessWidget {
-//   const Quanitity({super.key});
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef, ref) {
-//     return Container();
-//   }
-// }

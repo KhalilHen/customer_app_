@@ -12,7 +12,6 @@ class MenuItemOptionGroup {
   final int maxSelections;
 
   final bool isActive;
-  // final int displayOrder;
 
   MenuItemOptionGroup({
     required this.id,
@@ -24,7 +23,6 @@ class MenuItemOptionGroup {
       required this.maxSelections,
 
     required this.isActive,
-    // required this.displayOrder,
   });
 
   factory MenuItemOptionGroup.fromJson(Map<String, dynamic> json) {
@@ -40,14 +38,10 @@ class MenuItemOptionGroup {
 
       minSelections: json['minSelections'] as int? ?? json['min_selections'],
 
-      // Convert to Decimal - assuming the DB  stores it as a number
-      //  basePrice: json['base_price'] != null 
-      //       ? Decimal.parse(json['base_price'].toString())
-      //       : Decimal.zero,
+    
     maxSelections:  json['maxSelections'] as int? ?? json['max_selections'],
 
       isActive: json['isActive'] as bool? ?? json['is_active'] as bool,
-      // displayOrder: json['display_order '] as int,
     );
   }
 }

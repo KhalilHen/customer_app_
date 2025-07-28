@@ -1,3 +1,166 @@
+
+
+import 'package:flutter/material.dart';
+import 'package:hf_customer_app/controller/menu_category_controller.dart';
+import 'package:hf_customer_app/controller/menu_controller.dart';
+import 'package:hf_customer_app/custom-widgets/fetch_menu_items.dart';
+import 'package:hf_customer_app/models/menu_category.dart';
+import 'package:hf_customer_app/service/analytics_service.dart';
+
+
+class CustomFetchRestaurantCategory extends StatefulWidget {
+  final String restaurantId;
+  const CustomFetchRestaurantCategory({super.key, required this.restaurantId});
+
+  @override
+  State<CustomFetchRestaurantCategory> createState() => _CustomFetchRestaurantCategoryState();
+}
+
+class _CustomFetchRestaurantCategoryState extends State<CustomFetchRestaurantCategory> {
+    final  menuCategoryController = MenuCategoryController();
+    final menuItemController = MenuItemController();
+  @override
+  Widget build(BuildContext context) {
+    return  FutureBuilder<List<MenuCategory>>(
+
+      future: menuCategoryController.fetchCategoryFromRestaurant(widget.restaurantId),
+
+
+builder:  (context, snapshot) {
+
+       switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const SliverToBoxAdapter(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(50),
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      );
+          
+                    case ConnectionState.none:
+                      AnalyticsService.logEvent(
+                        'connection_state_none',
+                        page: 'restaurant_overview_page',
+                      );
+                      return const SliverToBoxAdapter(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(50),
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      );
+          
+                    case ConnectionState.done:
+                      if (snapshot.hasError) {
+                        return const SliverToBoxAdapter(
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Text(
+                                'Der is een fout gekomen bij het laden van categorieen. Contact support als dit blijft voorkomen',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+          
+                      if (!snapshot.hasData ||
+                          snapshot.data == null ||
+                          snapshot.data!.isEmpty) {
+                        return const SliverToBoxAdapter(
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Text(
+                                'Geen categorieën beschikbaar',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+          
+                      final categories = snapshot.data!
+                          .where((category) => category.isActive)
+                          .toList();
+          
+                      // Sort categories by display order
+                      categories.sort(
+                        (a, b) => a.displayOrder.compareTo(b.displayOrder),
+                      );
+          
+                      return SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final category = categories[index];
+                          return _buildCategorySection(category);
+                        }, childCount: categories.length),
+                      );
+          
+                    case ConnectionState.active:
+                      return const SliverToBoxAdapter(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(50),
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      );
+                  }
+},
+      
+    );
+  }
+
+  Widget _buildCategorySection(MenuCategory category) {
+    final sectionName = category.name.isEmpty ? 'Naamloos' : category.name;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Category Header
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          margin: const EdgeInsets.only(top: 16),
+          decoration: BoxDecoration(
+            color: Colors.deepOrange.withOpacity(0.1),
+            border: const Border(
+              left: BorderSide(color: Colors.deepOrange, width: 4),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                sectionName,
+                style: const TextStyle( 
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepOrange,
+                ),
+              ),
+              if (category.description != null &&
+                  category.description!.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    category.description!,
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  ),
+                ),
+            ],
+          ),
+        ),
+
+       CustomFetchMenuItems( categoryId: category,),
+      ],
+    );
+  }
+}
 // import 'package:flutter/material.dart';
 // import 'package:hf_customer_app/controller/menu_category_controller.dart';
 // import 'package:hf_customer_app/controller/order_controller.dart';

@@ -15,7 +15,7 @@ enum RestaurantVerification {
 
 
     factory RestaurantVerification.fromJson(dynamic json) {
-    if (json == null) return RestaurantVerification.declined; // default value
+    if (json == null) return RestaurantVerification.declined; 
     
     final String value = json.toString().toLowerCase();
     
