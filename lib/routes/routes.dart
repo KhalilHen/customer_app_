@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hf_customer_app/custom-widgets/view_cart.dart';
 import 'package:hf_customer_app/custom-widgets/view_cart_button.dart';
 import 'package:hf_customer_app/models/restaurant.dart';
 import 'package:hf_customer_app/pages/forgot_password.dart';
@@ -8,6 +9,7 @@ import 'package:hf_customer_app/pages/homepage.dart';
 import 'package:hf_customer_app/pages/location_page.dart';
 import 'package:hf_customer_app/pages/login.dart';
 import 'package:hf_customer_app/pages/onboarding/onboarding.dart';
+import 'package:hf_customer_app/pages/order_confirmation_page.dart';
 import 'package:hf_customer_app/pages/restaurant_overview_.dart';
 import 'package:hf_customer_app/pages/restaurant_view.dart';
 import 'package:hf_customer_app/pages/sign_up.dart';
@@ -51,7 +53,34 @@ class Routes {
             //? Here mabye later a global key to check if users is logged in
           ),
         ),
-        GoRoute(path:'/cart', builder: (context, state) => ViewCartButton(onPressed: () {  },),),
+
+  
+
+        GoRoute(path:'/cart', builder: (context, state) {
+          final extras = state.extra as String?; 
+    
+          return  ViewCart(restaurantSpecialInstructions: extras);
+
+        }
+          
+          
+          ),
+        // GoRoute(path:'/confirm-order', builder: (context, state) => const OrderConfirmationPage(),),
+GoRoute(
+  path: '/confirm-order',
+  name: 'confirmOrder',
+  builder: (context, state) {
+    final extras = state.extra as Map<String, dynamic>;
+    return OrderConfirmationPage(
+      cartItems: extras['cartItems'],
+      totalAmount: extras['total'],
+      subtotal: extras['subtotal'],
+      tax: extras['tax'],
+      restaurantSpecialInstructions: extras['restaurantSpecialInstructions'],
+      //  widget.restaurantSpecialInstructions
+    );
+  },
+),
 
         GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
 
@@ -96,9 +125,7 @@ class Routes {
           },
         ),
 
-// GoRoute(path: '/test-restaurant',
-//   builder: (context, state) => const RestaurantView(),
-// ),
+
         GoRoute(
           path: '/locatie',
           builder: (context, state) => const LocationPage(),

@@ -14,9 +14,9 @@ class ViewCartButton extends ConsumerWidget {
     final cart = ref.watch(cartProvider);
 
     // Only show if cart has items - this is the "magic" auto-show/hide behavior
-    if (cart.isEmpty) {
-      return const SizedBox.shrink();
-    }
+    // if (cart.isEmpty) {
+    //   return const SizedBox.shrink();
+    // }
 
     return Container(
       width: double.infinity,

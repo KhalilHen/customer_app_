@@ -14,6 +14,7 @@ class Restaurant {
   final bool featured;
   final RestaurantVerification verified;
   final bool isOpen;
+  final String?  specialInstructions;
   Restaurant({
     required this.id,
     required this.name,
@@ -27,7 +28,8 @@ class Restaurant {
     required this.isActive,
     required this.featured,
     required this.verified,
-    required this.isOpen
+    required this.isOpen,
+    this.specialInstructions
   });
 
   factory Restaurant.fromJson(Map<String, dynamic> json) {
@@ -57,7 +59,9 @@ class Restaurant {
       featured: json['featured'] as bool? ?? false,
       verified: RestaurantVerification.fromJson(json['verified']),
 
-      isOpen: json['is_open'] as bool,
+      isOpen: json['is_open'] as bool, 
+      specialInstructions:  json['specialInstructions'] as String? ?? json['special_instructions'],
+
      );
   }
 }
