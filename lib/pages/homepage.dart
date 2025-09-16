@@ -25,7 +25,7 @@ class _HomepageState extends State<Homepage> {
               try {
                 await authController.logOut();
                 if (!context.mounted) return;
-    context.go('/login');
+                context.go('/login');
                 // Navigator.of(context).pushReplacement(
                 //   MaterialPageRoute(builder: (context) => const LoginPage()),
                 // );

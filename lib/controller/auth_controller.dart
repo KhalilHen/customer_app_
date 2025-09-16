@@ -2,7 +2,7 @@ import 'package:hf_customer_app/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 //TODO add better error feedback
-class   AuthController {
+class AuthController {
   Future<bool> login(String email, String password) async {
     try {
       final response = await Supabase.instance.client.auth.signInWithPassword(
@@ -33,7 +33,7 @@ class   AuthController {
       final response = await supabase.auth.signUp(
         email: email,
         password: password,
-      // emailRedirectTo: 
+        // emailRedirectTo:
       );
       if (response.user == null) {
         throw Exception("Aanmelden faalde");
@@ -41,7 +41,7 @@ class   AuthController {
 
       final userId = response.user!.id;
 
-        await supabase.from('account').insert({
+      await supabase.from('account').insert({
         'user_id': userId,
         'email': email,
       });
@@ -53,8 +53,6 @@ class   AuthController {
       try {
         await supabase.auth.admin.deleteUser(userId!);
       } catch (deleteError) {
-
-
         //? Mabye here a audit log so i know this goes wrong
       }
 
@@ -83,10 +81,10 @@ class   AuthController {
       return null;
     } else {
       return user;
-      }
     }
+  }
 
-    bool isLoggedIn() {
+  bool isLoggedIn() {
     return supabase.auth.currentUser != null;
   }
 
@@ -95,17 +93,15 @@ class   AuthController {
   //     try {
 
   //         final response = await supabase.auth.resetPasswordForEmail(
-            
+
   //           email = email,
   //           redirectTo:  ""
-            
+
   //           );
   //     }
   //     catch (e) {
 
   //     }
-      
-
 
   // }
 
@@ -142,4 +138,19 @@ class   AuthController {
   String getPostgresException() {
     return "Er is een fout opgetreden bij het verwerken van je verzoek. Probeer het alstublieft opnieuw. Blijft het probleem zich voordoen? Neem dan contact op met onze supportafdeling.";
   }
+
+  // Future<bool> validateEmail(String email) async {
+  //   try {
+  //     final response = await supabase.auth.resetPasswordForEmail(email);
+
+  //     // if(response == null)
+  //     return true;
+
+  //     // if (response. == null) {
+  //     //   return false;
+  //     // }
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
 }
